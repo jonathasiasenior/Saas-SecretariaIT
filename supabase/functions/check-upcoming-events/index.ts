@@ -15,7 +15,7 @@ Deno.serve(async (req) => {
     // Find events needing notification
     const { data: events, error } = await supabase
       .from('events')
-      .select('*, profiles!inner(phone, email, full_name), user_settings!inner(*)')
+      .select('*, profiles!inner(phone, email, full_name)')
       .or(
         `and(notify_24h.eq.true,notified_24h.eq.false,start_at.gte.${new Date(now.getTime() + 23 * 3600000).toISOString()},start_at.lte.${new Date(now.getTime() + 25 * 3600000).toISOString()}),` +
         `and(notify_8h.eq.true,notified_8h.eq.false,start_at.gte.${new Date(now.getTime() + 7 * 3600000).toISOString()},start_at.lte.${new Date(now.getTime() + 9 * 3600000).toISOString()}),` +
@@ -28,6 +28,14 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
+
+    // Get user_settings for all unique user_ids
+    const userIds = [...new Set(events.map((e: any) => e.user_id))]
+    const { data: settingsData } = await supabase
+      .from('user_settings')
+      .select('*')
+      .in('id', userIds)
+    const settingsMap = Object.fromEntries((settingsData || []).map((s: any) => [s.id, s]))
 
     for (const event of events) {
       const startAt = new Date(event.start_at)
@@ -50,7 +58,8 @@ Deno.serve(async (req) => {
       if (!timeLabel) continue
 
       const profile = event.profiles as { phone: string | null; email: string; full_name: string }
-      const settings = event.user_settings as { notification_push: boolean; notification_email: boolean; notification_whatsapp: boolean }
+      const settings = settingsMap[event.user_id] as { notification_push: boolean; notification_email: boolean; notification_whatsapp: boolean }
+      if (!settings) continue
       const eventTime = startAt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' })
       const eventDate = startAt.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })
 

@@ -13,7 +13,8 @@
 | Backend | Supabase | 2.x |
 | Banco de Dados | PostgreSQL (Supabase) | 15+ |
 | Edge Functions | Deno (Supabase) | - |
-| IA | Google Gemini API | 2.0 Flash |
+| IA - Transcrição | OpenAI Whisper | whisper-1 |
+| IA - Classificação | OpenAI GPT-4o-mini | gpt-4o-mini |
 | Notificações | Resend (email), Z-API (WhatsApp), Web Push | - |
 
 ---
@@ -126,13 +127,14 @@ Saas-SecretariaIT/
 │  │              Edge Functions                   │     │
 │  │  ┌──────────────┐  ┌──────────────────┐      │     │
 │  │  │process-audio │  │  process-text    │      │     │
-│  │  │   ↓          │  │      ↓           │      │     │
-│  │  │ Gemini API   │  │  Gemini API      │      │     │
+│  │  │   ↓ Whisper  │  │      ↓           │      │     │
+│  │  │  OpenAI API  │  │  OpenAI API      │      │     │
+│  │  │  GPT-4o-mini │  │  GPT-4o-mini     │      │     │
 │  │  └──────┬───────┘  └──────┬───────────┘      │     │
 │  │         └────────┬────────┘                   │     │
 │  │                  ↓                            │     │
 │  │     ┌──────────────────────┐                  │     │
-│  │     │ check-upcoming-events│ ← pg_cron 5min   │     │
+│  │     │ check-upcoming-events│ ← cron-job.org   │     │
 │  │     └──────────┬───────────┘                  │     │
 │  │                ↓                              │     │
 │  │  ┌─────────────┴──────────────┐               │     │
@@ -194,9 +196,9 @@ Saas-SecretariaIT/
 
 | Função | Trigger | Descrição |
 |--------|---------|-----------|
-| `process-audio` | Frontend POST | Baixa áudio, transcreve com Gemini, classifica, salva |
-| `process-text` | Frontend POST | Recebe texto, classifica com Gemini, salva |
-| `check-upcoming-events` | pg_cron (5min) | Verifica eventos próximos, dispara notificações |
+| `process-audio` | Frontend POST | Baixa áudio, transcreve com OpenAI Whisper, classifica com GPT-4o-mini, salva |
+| `process-text` | Frontend POST | Recebe texto, classifica com GPT-4o-mini, salva |
+| `check-upcoming-events` | cron-job.org (5min) | Verifica eventos próximos, dispara notificações |
 | `send-notification-email` | Interno | Envia email via Resend API |
 | `send-notification-whatsapp` | Interno | Envia WhatsApp via Z-API |
 | `admin-create-user` | Frontend POST | Cria usuário (admin only) |
@@ -204,11 +206,19 @@ Saas-SecretariaIT/
 ### Secrets necessários no Supabase
 
 ```bash
-supabase secrets set GEMINI_API_KEY=AIzaSy...
-supabase secrets set RESEND_API_KEY=re_...
-supabase secrets set WHATSAPP_INSTANCE_ID=...
-supabase secrets set WHATSAPP_TOKEN=...
+supabase secrets set OPENAI_API_KEY=sk-...
+supabase secrets set RESEND_API_KEY=re_...          # pendente
+supabase secrets set WHATSAPP_INSTANCE_ID=...       # pendente
+supabase secrets set WHATSAPP_TOKEN=...             # pendente
 ```
+
+### Cron de Notificações
+
+- Serviço: **cron-job.org** (externo, gratuito)
+- Intervalo: a cada 5 minutos
+- URL chamada: `https://gpwhauitlzipzlyboyja.supabase.co/functions/v1/check-upcoming-events`
+- Método: POST com `Authorization: Bearer <service_role_key>`
+- O pg_cron do Supabase **não é usado** (limitação de DNS no plano gratuito)
 
 ---
 
