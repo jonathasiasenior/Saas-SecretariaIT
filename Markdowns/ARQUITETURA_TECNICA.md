@@ -216,7 +216,7 @@ supabase secrets set WHATSAPP_TOKEN=...             # pendente
 
 - Serviço: **cron-job.org** (externo, gratuito)
 - Intervalo: a cada 5 minutos
-- URL chamada: `https://gpwhauitlzipzlyboyja.supabase.co/functions/v1/check-upcoming-events`
+- URL chamada: `https://<project-ref>.supabase.co/functions/v1/check-upcoming-events`
 - Método: POST com `Authorization: Bearer <service_role_key>`
 - O pg_cron do Supabase **não é usado** (limitação de DNS no plano gratuito)
 
