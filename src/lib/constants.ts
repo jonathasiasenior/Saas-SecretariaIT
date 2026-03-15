@@ -29,6 +29,10 @@ export const CALENDAR_VIEW_LABELS: Record<CalendarView, string> = {
 
 export const MAX_AUDIO_DURATION = 60 // seconds
 export const MAX_AUDIO_SIZE = 10 * 1024 * 1024 // 10MB
+export const MAX_PRODUCT_IMAGE_SIZE = 10 * 1024 * 1024 // 10MB
+export const PRODUCT_IMAGE_ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const
+export const PRODUCT_IMAGE_STYLES = ['CHAMATIVO', 'CONSERVADOR'] as const
+export type ProductImageStyle = (typeof PRODUCT_IMAGE_STYLES)[number]
 
 export const EVENT_COLORS = [
   '#8B5CF6', // Purple

@@ -9,6 +9,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { RegisterPage } from '@/pages/RegisterPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { NotesPage } from '@/pages/NotesPage'
+import { ImagesPage } from '@/pages/ImagesPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { AdminPage } from '@/pages/AdminPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -35,6 +36,7 @@ export default function App() {
               <Route element={<AppLayout />}>
                 <Route index element={<DashboardPage />} />
                 <Route path="notes" element={<NotesPage />} />
+                <Route path="images" element={<ImagesPage />} />
                 <Route path="settings" element={<SettingsPage />} />
                 <Route path="admin" element={<AdminPage />} />
               </Route>

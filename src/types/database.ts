@@ -36,6 +36,21 @@ export interface Database {
         Insert: Omit<Subscription, 'id' | 'created_at'>
         Update: Partial<Omit<Subscription, 'id'>>
       }
+      product_image_originals: {
+        Row: ProductImageOriginal
+        Insert: Omit<ProductImageOriginal, 'id' | 'created_at'>
+        Update: Partial<Omit<ProductImageOriginal, 'id'>>
+      }
+      product_image_generations: {
+        Row: ProductImageGeneration
+        Insert: Omit<ProductImageGeneration, 'id' | 'created_at'>
+        Update: Partial<Omit<ProductImageGeneration, 'id'>>
+      }
+      product_image_feedback: {
+        Row: ProductImageFeedback
+        Insert: Omit<ProductImageFeedback, 'id' | 'created_at'>
+        Update: Partial<Omit<ProductImageFeedback, 'id'>>
+      }
     }
   }
 }
@@ -142,5 +157,41 @@ export interface Subscription {
   max_audio_minutes_per_month: number
   started_at: string
   expires_at: string | null
+  created_at: string
+}
+
+export interface ProductImageOriginal {
+  id: string
+  user_id: string
+  original_file_name: string
+  storage_path: string
+  content_type: string
+  width: number | null
+  height: number | null
+  created_at: string
+}
+
+export interface ProductImageGeneration {
+  id: string
+  original_image_id: string
+  user_id: string
+  style: 'CHAMATIVO' | 'CONSERVADOR'
+  prompt_used: string
+  openai_model: string
+  status: 'pending' | 'completed' | 'failed'
+  storage_path: string | null
+  retry_of_generation_id: string | null
+  is_liked: boolean
+  is_disliked: boolean
+  is_in_gallery: boolean
+  error_message: string | null
+  created_at: string
+}
+
+export interface ProductImageFeedback {
+  id: string
+  generation_id: string
+  user_id: string
+  feedback_type: 'LIKE' | 'DISLIKE'
   created_at: string
 }
