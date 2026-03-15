@@ -6,9 +6,10 @@ import type { Theme } from '@/lib/constants'
 
 const pageTitles: Record<string, string> = {
   '/': 'Dashboard',
-  '/notes': 'Anotações',
-  '/settings': 'Configurações',
-  '/admin': 'Administração',
+  '/notes': 'Anotacoes',
+  '/images': 'Imagens de Produto',
+  '/settings': 'Configuracoes',
+  '/admin': 'Administracao',
 }
 
 export function Header() {
@@ -21,12 +22,10 @@ export function Header() {
     <header className="flex h-16 items-center justify-between border-b border-border bg-background/80 backdrop-blur-sm px-4 md:px-6">
       <h1 className="text-xl font-semibold">{title}</h1>
       <div className="flex items-center gap-2">
-        {/* Notifications */}
         <button className="relative flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
           <Bell className="h-5 w-5" />
         </button>
 
-        {/* Theme toggle */}
         <div className="relative group">
           <button className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
             <Palette className="h-5 w-5" />
