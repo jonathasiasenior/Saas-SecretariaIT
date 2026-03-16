@@ -8,6 +8,7 @@ import { VoiceInputButton } from '@/components/input/VoiceInputButton'
 import { LoginPage } from '@/pages/LoginPage'
 import { RegisterPage } from '@/pages/RegisterPage'
 import { DashboardPage } from '@/pages/DashboardPage'
+import { ConexaoGospelPage } from '@/pages/ConexaoGospelPage'
 import { NotesPage } from '@/pages/NotesPage'
 import { ImagesPage } from '@/pages/ImagesPage'
 import { SettingsPage } from '@/pages/SettingsPage'
@@ -35,6 +36,7 @@ export default function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route element={<AppLayout />}>
                 <Route index element={<DashboardPage />} />
+                <Route path="conexao-gospel" element={<ConexaoGospelPage />} />
                 <Route path="notes" element={<NotesPage />} />
                 <Route path="images" element={<ImagesPage />} />
                 <Route path="settings" element={<SettingsPage />} />

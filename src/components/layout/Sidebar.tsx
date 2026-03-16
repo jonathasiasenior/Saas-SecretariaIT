@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { CalendarDays, FileText, ImagePlus, Settings, Shield, LogOut } from 'lucide-react'
+import { CalendarDays, FileText, HeartHandshake, ImagePlus, Settings, Shield, LogOut } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
 import { APP_NAME } from '@/lib/constants'
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: CalendarDays },
+  { to: '/conexao-gospel', label: 'Conexao Gospel', icon: HeartHandshake },
   { to: '/notes', label: 'Anotacoes', icon: FileText },
   { to: '/images', label: 'Imagens', icon: ImagePlus },
   { to: '/settings', label: 'Configuracoes', icon: Settings },

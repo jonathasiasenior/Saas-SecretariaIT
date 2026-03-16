@@ -51,6 +51,26 @@ export interface Database {
         Insert: Omit<ProductImageFeedback, 'id' | 'created_at'>
         Update: Partial<Omit<ProductImageFeedback, 'id'>>
       }
+      qtc_profiles: {
+        Row: QtcProfile
+        Insert: Omit<QtcProfile, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Omit<QtcProfile, 'id'>>
+      }
+      qtc_actions: {
+        Row: QtcAction
+        Insert: Omit<QtcAction, 'id' | 'created_at'>
+        Update: Partial<Omit<QtcAction, 'id'>>
+      }
+      pro_profiles: {
+        Row: ProProfile
+        Insert: Omit<ProProfile, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Omit<ProProfile, 'id'>>
+      }
+      pro_posts: {
+        Row: ProPost
+        Insert: Omit<ProPost, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Omit<ProPost, 'id'>>
+      }
     }
   }
 }
@@ -194,4 +214,59 @@ export interface ProductImageFeedback {
   user_id: string
   feedback_type: 'LIKE' | 'DISLIKE'
   created_at: string
+}
+
+export interface QtcProfile {
+  id: string
+  user_id: string
+  display_name: string
+  city: string
+  state: string
+  church_name: string | null
+  looking_for: 'relationship' | 'friendship' | 'both'
+  bio: string
+  tags: string[]
+  compatibility_focus: string | null
+  is_visible: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface QtcAction {
+  id: string
+  from_user_id: string
+  to_profile_id: string
+  action_type: 'liked' | 'passed'
+  created_at: string
+}
+
+export interface ProProfile {
+  id: string
+  user_id: string
+  display_name: string
+  role_title: string
+  city: string
+  state: string
+  focus: string
+  score_label: string
+  specialties: string[]
+  is_public: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface ProPost {
+  id: string
+  user_id: string
+  profile_id: string
+  author_name: string
+  author_role: string
+  title: string
+  summary: string
+  reach_label: string
+  engagement_label: string
+  tags: string[]
+  is_published: boolean
+  created_at: string
+  updated_at: string
 }

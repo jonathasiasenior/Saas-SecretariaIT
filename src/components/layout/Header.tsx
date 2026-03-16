@@ -6,6 +6,7 @@ import type { Theme } from '@/lib/constants'
 
 const pageTitles: Record<string, string> = {
   '/': 'Dashboard',
+  '/conexao-gospel': 'Conexao Gospel',
   '/notes': 'Anotacoes',
   '/images': 'Imagens de Produto',
   '/settings': 'Configuracoes',

@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom'
-import { CalendarDays, FileText, ImagePlus, Settings } from 'lucide-react'
+import { CalendarDays, FileText, HeartHandshake, ImagePlus, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { to: '/', label: 'Agenda', icon: CalendarDays },
+  { to: '/conexao-gospel', label: 'Conexao', icon: HeartHandshake },
   { to: '/notes', label: 'Notas', icon: FileText },
   { to: '/images', label: 'Imagens', icon: ImagePlus },
   { to: '/settings', label: 'Config', icon: Settings },
